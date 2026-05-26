@@ -15,7 +15,7 @@ var GAME_REGISTRY = {
       desc:     'Battle monsters with vocabulary & grammar! Answer correctly to attack.',
       skill:    'Vocabulary + Grammar',
       released: true,
-      loader:   'loadWordQuestGame'  // string name — resolved at runtime, not parse time
+      loader:   'loadWordQuestGame'
     }
   ],
   'M.2': [], 'M.3': [], 'M.4': [], 'M.5': [], 'M.6': []
