@@ -144,7 +144,7 @@ function renderStudentTable() {
       + '<td><span class="tag tag-grade">' + htmlEsc(s.grade) + '</span></td>'
       + '<td style="color:var(--text2)">' + htmlEsc(s.room || '-') + '</td>'
       + '<td style="color:var(--text3);font-size:.8rem">' + (s.pw ? '••••' : 'None') + '</td>'
-      + '<td style="text-align:right;white-space:nowrap"><div style="display:inline-flex;gap:6px">'
+      + '<td style="text-align:right;white-space:nowrap"><div style="display:flex;justify-content:flex-end;gap:6px">'
       + '<button class="btn btn-sm" style="background:rgba(108,92,231,.15);color:#A29BFE;border:1px solid rgba(108,92,231,.3);font-size:.76rem" onclick="openEditStudent(\'' + htmlEsc(s.id) + '\')">✏️ Edit</button>'
       + '<button class="btn btn-sm" style="background:rgba(225,112,85,.12);color:#FF8A72;border:1px solid rgba(225,112,85,.3);font-size:.76rem" onclick="deleteStudent(\'' + htmlEsc(s.id) + '\')">🗑️ Del</button>'
       + '</div></td></tr>';

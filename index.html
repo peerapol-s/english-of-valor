@@ -175,6 +175,24 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{border-color:var(--success);color:var(--success)}
 .toast.error{border-color:var(--danger);color:var(--danger)}
+/* Student table — column alignment */
+#student-tbody td:nth-child(1) { text-align: center; }  /* NO.      */
+#student-tbody td:nth-child(2) { text-align: center; }  /* ID       */
+#student-tbody td:nth-child(3) { text-align: left;   }  /* NAME     */
+#student-tbody td:nth-child(4) { text-align: center; }  /* LEVEL    */
+#student-tbody td:nth-child(5) { text-align: center; }  /* ROOM     */
+#student-tbody td:nth-child(6) { text-align: center; }  /* PASSWORD */
+#student-tbody td:nth-child(7) { text-align: center; }  /* ACTIONS  */
+/* Score table — column alignment */
+#score-tbody td:nth-child(1) { text-align: center; }  /* NO.    */
+#score-tbody td:nth-child(2) { text-align: center; }  /* ID     */
+#score-tbody td:nth-child(3) { text-align: left;   }  /* NAME   */
+#score-tbody td:nth-child(4) { text-align: center; }  /* LEVEL  */
+#score-tbody td:nth-child(5) { text-align: center; }  /* ROOM   */
+#score-tbody td:nth-child(6) { text-align: center; }  /* GAME   */
+#score-tbody td:nth-child(7) { text-align: center; }  /* SCORE  */
+#score-tbody td:nth-child(8) { text-align: center; }  /* C/W    */
+#score-tbody td:nth-child(9) { text-align: center; }  /* DATE   */
 @keyframes correctPulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 @keyframes monsterShake{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-12px) rotate(-5deg)}75%{transform:translateX(12px) rotate(5deg)}}
@@ -418,7 +436,15 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
       </div>
       <div class="table-wrap">
         <table class="admin-table">
-          <thead><tr><th>NO.</th><th>ID</th><th>NAME</th><th>LEVEL</th><th>ROOM</th><th>PASSWORD</th><th style="text-align:right">ACTIONS</th></tr></thead>
+          <thead><tr>
+            <th style="text-align:center">NO.</th>
+            <th style="text-align:center">ID</th>
+            <th style="text-align:left">NAME</th>
+            <th style="text-align:center">LEVEL</th>
+            <th style="text-align:center">ROOM</th>
+            <th style="text-align:center">PASSWORD</th>
+            <th style="text-align:center">ACTIONS</th>
+          </tr></thead>
           <tbody id="student-tbody"></tbody>
         </table>
       </div>
@@ -436,7 +462,17 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
       </div>
       <div class="table-wrap">
         <table class="admin-table">
-          <thead><tr><th>#</th><th>ID</th><th>NAME</th><th>LEVEL</th><th>ROOM</th><th>GAME</th><th>SCORE</th><th>CORRECT/WRONG</th><th>DATE</th></tr></thead>
+          <thead><tr>
+            <th style="text-align:center">NO.</th>
+            <th style="text-align:center">ID</th>
+            <th style="text-align:left">NAME</th>
+            <th style="text-align:center">LEVEL</th>
+            <th style="text-align:center">ROOM</th>
+            <th style="text-align:center">GAME</th>
+            <th style="text-align:center">SCORE</th>
+            <th style="text-align:center">CORRECT/WRONG</th>
+            <th style="text-align:center">DATE</th>
+          </tr></thead>
           <tbody id="score-tbody"></tbody>
         </table>
       </div>
