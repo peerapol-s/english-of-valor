@@ -14,8 +14,8 @@ var GAME_REGISTRY = {
       name:     'Word Quest RPG',
       desc:     'Battle monsters with vocabulary & grammar! Answer correctly to attack.',
       skill:    'Vocabulary + Grammar',
-      released: true,        // ← set false to hide from students (admin can still test)
-      loader:   loadWordQuestGame  // function defined in games/m1-word-quest.js
+      released: true,
+      loader:   'loadWordQuestGame'  // string name — resolved at runtime, not parse time
     }
   ],
   'M.2': [], 'M.3': [], 'M.4': [], 'M.5': [], 'M.6': []

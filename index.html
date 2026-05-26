@@ -478,15 +478,16 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
 <script src="js/games/m1-word-quest.js"></script>
 <script>
 
-// startGame is the bridge called by home.js — it delegates to each game's loader
+// startGame: bridge called by home.js — resolves string loader name at runtime
 function startGame(gameId, gradeId) {
   var allGrades = Object.keys(GAME_REGISTRY);
   for (var i = 0; i < allGrades.length; i++) {
     var games = GAME_REGISTRY[allGrades[i]];
     for (var j = 0; j < games.length; j++) {
       if (games[j].id === gameId) {
-        games[j].loader(gradeId);
-        return;
+        var fn = window[games[j].loader];   // resolve string → function at runtime
+        if (typeof fn === 'function') { fn(gradeId); return; }
+        showToast('Game loader not found: ' + games[j].loader, 'error'); return;
       }
     }
   }
