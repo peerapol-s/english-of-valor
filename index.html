@@ -158,7 +158,7 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
 .admin-panel{display:none}.admin-panel.active{display:block}
 .admin-table{width:100%;border-collapse:collapse;font-size:.87rem}
 .admin-table th{text-align:left;padding:10px 12px;color:var(--text3);font-size:.72rem;font-weight:800;letter-spacing:.8px;border-bottom:1px solid var(--border);white-space:nowrap}
-.admin-table td{padding:11px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}
+.admin-table td{padding:11px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle}.admin-table td:first-child{width:44px}.admin-table td:last-child{width:160px}
 .admin-table tr:hover td{background:var(--bg3)}
 .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto}
 .filter-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
@@ -212,7 +212,7 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
   <div style="margin-bottom:32px;text-align:center">
     <div style="font-size:3.5rem;margin-bottom:12px">&#9876;&#65039;</div>
     <div class="logo">English of Valor</div>
-    <div class="logo-sub">English Learning Games &mdash; By KruMEEN</div>
+    <div class="logo-sub">English Learning Game &mdash; By KruMEEN</div>
   </div>
   <div class="card">
     <div class="card-title">&#127918; Login to Play</div>
@@ -418,7 +418,7 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
       </div>
       <div class="table-wrap">
         <table class="admin-table">
-          <thead><tr><th>NO.</th><th>ID</th><th>NAME</th><th>LEVEL</th><th>ROOM</th><th>PASSWORD</th><th>ACTIONS</th></tr></thead>
+          <thead><tr><th>NO.</th><th>ID</th><th>NAME</th><th>LEVEL</th><th>ROOM</th><th>PASSWORD</th><th style="text-align:right">ACTIONS</th></tr></thead>
           <tbody id="student-tbody"></tbody>
         </table>
       </div>
