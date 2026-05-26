@@ -121,6 +121,40 @@ function _findStudent(id) {
   var s = getStudents(); for (var i = 0; i < s.length; i++) { if (s[i].id === id) return s[i]; } return null;
 }
 
+// ── Student Checkbox: Select All / Delete Selected ────────────
+function toggleSelectAllStudents(masterCb) {
+  var checkboxes = document.querySelectorAll('#student-tbody .row-cb');
+  checkboxes.forEach(function(cb) { cb.checked = masterCb.checked; });
+  _updateStudentDeleteBtn();
+}
+
+function _updateStudentDeleteBtn() {
+  var checked = document.querySelectorAll('#student-tbody .row-cb:checked').length;
+  var btn = document.getElementById('btn-delete-selected-students');
+  if (btn) {
+    btn.disabled = checked === 0;
+    btn.textContent = checked > 0 ? '🗑️ Delete Selected (' + checked + ')' : '🗑️ Delete Selected';
+  }
+  // update master checkbox state
+  var all = document.querySelectorAll('#student-tbody .row-cb');
+  var master = document.getElementById('student-master-cb');
+  if (master && all.length > 0) {
+    master.indeterminate = checked > 0 && checked < all.length;
+    master.checked = checked === all.length;
+  }
+}
+
+function deleteSelectedStudents() {
+  var checked = document.querySelectorAll('#student-tbody .row-cb:checked');
+  if (!checked.length) return;
+  if (!confirm('Delete ' + checked.length + ' selected student(s)?')) return;
+  var ids = [];
+  checked.forEach(function(cb) { ids.push(cb.dataset.id); });
+  saveStudents(getStudents().filter(function(s) { return ids.indexOf(s.id) < 0; }));
+  updateSfRooms(); renderStudentTable();
+  showToast('Deleted ' + ids.length + ' student(s).', 'success');
+}
+
 // ── Render student table ──────────────────────────────────────
 function renderStudentTable() {
   var students = getStudents();
@@ -131,13 +165,21 @@ function renderStudentTable() {
   });
   document.getElementById('student-count-label').textContent =
     'Student List (' + students.length + ' total, showing ' + filtered.length + ')';
+
+  // reset master checkbox
+  var master = document.getElementById('student-master-cb');
+  if (master) { master.checked = false; master.indeterminate = false; }
+  var delBtn = document.getElementById('btn-delete-selected-students');
+  if (delBtn) { delBtn.disabled = true; delBtn.textContent = '🗑️ Delete Selected'; }
+
   var tbody = document.getElementById('student-tbody');
   if (!filtered.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:24px">No students found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text3);padding:24px">No students found.</td></tr>';
     return;
   }
   tbody.innerHTML = filtered.map(function(s, i) {
     return '<tr>'
+      + '<td style="text-align:center;width:36px"><input type="checkbox" class="row-cb admin-cb" data-id="' + htmlEsc(s.id) + '" onchange="_updateStudentDeleteBtn()"></td>'
       + '<td style="color:var(--text3)">' + (i+1) + '</td>'
       + '<td><b>' + htmlEsc(s.id) + '</b></td>'
       + '<td>' + htmlEsc(s.name || '-') + '</td>'
@@ -160,13 +202,21 @@ function renderScoreTable() {
   var filtered = scores.filter(function(s) {
     return (gf === 'all' || s.grade === gf) && (rf === 'all' || s.room === rf) && (gmf === 'all' || s.game === gmf);
   });
+
+  // reset master checkbox
+  var master = document.getElementById('score-master-cb');
+  if (master) { master.checked = false; master.indeterminate = false; }
+  var delBtn = document.getElementById('btn-clear-selected-scores');
+  if (delBtn) { delBtn.disabled = true; delBtn.textContent = '🗑️ Clear Selected'; }
+
   var tbody = document.getElementById('score-tbody');
   if (!filtered.length) {
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text3);padding:24px">No scores found.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text3);padding:24px">No scores found.</td></tr>';
     return;
   }
   tbody.innerHTML = filtered.map(function(s, i) {
     return '<tr>'
+      + '<td style="text-align:center;width:36px"><input type="checkbox" class="row-cb admin-cb" data-ts="' + s.ts + '" onchange="_updateScoreDeleteBtn()"></td>'
       + '<td style="color:var(--text3)">' + (i+1) + '</td>'
       + '<td><b>' + htmlEsc(s.studentId) + '</b></td>'
       + '<td>' + htmlEsc(s.name || '-') + '</td>'
@@ -178,6 +228,39 @@ function renderScoreTable() {
       + '<td style="font-size:.76rem;color:var(--text3)">' + htmlEsc(s.date) + ' ' + htmlEsc(s.time) + '</td>'
       + '</tr>';
   }).join('');
+}
+
+// ── Score Checkbox: Select All / Clear Selected ───────────────
+function toggleSelectAllScores(masterCb) {
+  var checkboxes = document.querySelectorAll('#score-tbody .row-cb');
+  checkboxes.forEach(function(cb) { cb.checked = masterCb.checked; });
+  _updateScoreDeleteBtn();
+}
+
+function _updateScoreDeleteBtn() {
+  var checked = document.querySelectorAll('#score-tbody .row-cb:checked').length;
+  var btn = document.getElementById('btn-clear-selected-scores');
+  if (btn) {
+    btn.disabled = checked === 0;
+    btn.textContent = checked > 0 ? '🗑️ Clear Selected (' + checked + ')' : '🗑️ Clear Selected';
+  }
+  var all = document.querySelectorAll('#score-tbody .row-cb');
+  var master = document.getElementById('score-master-cb');
+  if (master && all.length > 0) {
+    master.indeterminate = checked > 0 && checked < all.length;
+    master.checked = checked === all.length;
+  }
+}
+
+function clearSelectedScores() {
+  var checked = document.querySelectorAll('#score-tbody .row-cb:checked');
+  if (!checked.length) return;
+  if (!confirm('Clear ' + checked.length + ' selected score(s)?')) return;
+  var tsList = [];
+  checked.forEach(function(cb) { tsList.push(Number(cb.dataset.ts)); });
+  saveScores(getScores().filter(function(s) { return tsList.indexOf(s.ts) < 0; }));
+  renderScoreTable();
+  showToast('Cleared ' + tsList.length + ' score(s).', 'success');
 }
 
 function exportCSV() {

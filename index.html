@@ -176,23 +176,25 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
 .toast.success{border-color:var(--success);color:var(--success)}
 .toast.error{border-color:var(--danger);color:var(--danger)}
 /* Student table — column alignment */
-#student-tbody td:nth-child(1) { text-align: center; }  /* NO.      */
-#student-tbody td:nth-child(2) { text-align: center; }  /* ID       */
-#student-tbody td:nth-child(3) { text-align: left;   }  /* NAME     */
-#student-tbody td:nth-child(4) { text-align: center; }  /* LEVEL    */
-#student-tbody td:nth-child(5) { text-align: center; }  /* ROOM     */
-#student-tbody td:nth-child(6) { text-align: center; }  /* PASSWORD */
-#student-tbody td:nth-child(7) { text-align: center; }  /* ACTIONS  */
+#student-tbody td:nth-child(1) { text-align: center; }  /* CB       */
+#student-tbody td:nth-child(2) { text-align: center; }  /* NO.      */
+#student-tbody td:nth-child(3) { text-align: center; }  /* ID       */
+#student-tbody td:nth-child(4) { text-align: left;   }  /* NAME     */
+#student-tbody td:nth-child(5) { text-align: center; }  /* LEVEL    */
+#student-tbody td:nth-child(6) { text-align: center; }  /* ROOM     */
+#student-tbody td:nth-child(7) { text-align: center; }  /* PASSWORD */
+#student-tbody td:nth-child(8) { text-align: center; }  /* ACTIONS  */
 /* Score table — column alignment */
-#score-tbody td:nth-child(1) { text-align: center; }  /* NO.    */
-#score-tbody td:nth-child(2) { text-align: center; }  /* ID     */
-#score-tbody td:nth-child(3) { text-align: left;   }  /* NAME   */
-#score-tbody td:nth-child(4) { text-align: center; }  /* LEVEL  */
-#score-tbody td:nth-child(5) { text-align: center; }  /* ROOM   */
-#score-tbody td:nth-child(6) { text-align: center; }  /* GAME   */
-#score-tbody td:nth-child(7) { text-align: center; }  /* SCORE  */
-#score-tbody td:nth-child(8) { text-align: center; }  /* C/W    */
-#score-tbody td:nth-child(9) { text-align: center; }  /* DATE   */
+#score-tbody td:nth-child(1)  { text-align: center; }  /* CB     */
+#score-tbody td:nth-child(2)  { text-align: center; }  /* NO.    */
+#score-tbody td:nth-child(3)  { text-align: center; }  /* ID     */
+#score-tbody td:nth-child(4)  { text-align: left;   }  /* NAME   */
+#score-tbody td:nth-child(5)  { text-align: center; }  /* LEVEL  */
+#score-tbody td:nth-child(6)  { text-align: center; }  /* ROOM   */
+#score-tbody td:nth-child(7)  { text-align: center; }  /* GAME   */
+#score-tbody td:nth-child(8)  { text-align: center; }  /* SCORE  */
+#score-tbody td:nth-child(9)  { text-align: center; }  /* C/W    */
+#score-tbody td:nth-child(10) { text-align: center; }  /* DATE   */
 @keyframes correctPulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 @keyframes monsterShake{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-12px) rotate(-5deg)}75%{transform:translateX(12px) rotate(5deg)}}
@@ -206,6 +208,7 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
   .form-row{grid-template-columns:1fr}.navbar{padding:10px 14px}.nav-user{display:none}
 }
 @media(max-width:400px){.result-details{grid-template-columns:1fr}.grade-grid{grid-template-columns:repeat(3,1fr)}}
+.admin-cb { width: 15px; height: 15px; cursor: pointer; accent-color: var(--primary); }
 </style>
 </head>
 <body>
@@ -431,12 +434,14 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
           <select class="filter-select" id="sf-room" onchange="renderStudentTable()" style="font-size:.8rem">
             <option value="all">All Rooms</option>
           </select>
-          <button class="btn btn-sm btn-danger" onclick="clearAllStudents()">Delete All</button>
+            <button class="btn btn-sm btn-danger" id="btn-delete-selected-students" onclick="deleteSelectedStudents()" disabled>🗑️ Delete Selected</button>
+            <button class="btn btn-sm btn-danger" onclick="clearAllStudents()">Delete All</button>
         </div>
       </div>
       <div class="table-wrap">
         <table class="admin-table">
           <thead><tr>
+            <th style="text-align:center;width:36px"><input type="checkbox" id="student-master-cb" class="admin-cb" onchange="toggleSelectAllStudents(this)"></th>
             <th style="text-align:center">NO.</th>
             <th style="text-align:center">ID</th>
             <th style="text-align:left">NAME</th>
@@ -458,11 +463,13 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
         <select class="filter-select" id="scf-game"  onchange="renderScoreTable()"><option value="all">All Games</option></select>
         <div style="flex:1"></div>
         <button class="btn btn-sm btn-success"   onclick="exportCSV()">&#128229; Export CSV</button>
+        <button class="btn btn-sm btn-danger"    id="btn-clear-selected-scores" onclick="clearSelectedScores()" disabled>🗑️ Clear Selected</button>
         <button class="btn btn-sm btn-secondary" onclick="clearAllScores()">&#128465;&#65039; Clear All</button>
       </div>
       <div class="table-wrap">
         <table class="admin-table">
           <thead><tr>
+            <th style="text-align:center;width:36px"><input type="checkbox" id="score-master-cb" class="admin-cb" onchange="toggleSelectAllScores(this)"></th>
             <th style="text-align:center">NO.</th>
             <th style="text-align:center">ID</th>
             <th style="text-align:left">NAME</th>
