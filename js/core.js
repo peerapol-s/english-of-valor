@@ -99,6 +99,12 @@ function afterLogin() {
   hideAlert('login-error');
   document.getElementById('student-id-input').value = '';
   document.getElementById('student-pw-input').value = '';
+
+  if (CU) {
+    var name = CU.isAdmin ? 'Admin' : CU.isGuest ? 'Guest' : (CU.name || CU.id);
+    document.getElementById('home-greeting').textContent = 'Welcome, ' + name + '! 🎉';
+  }
+
   updateNavbar(); goHome();
   if (CU && !CU.isAdmin && !CU.isGuest) {
     var grade = CU.grade || 'M.1';
