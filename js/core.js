@@ -100,6 +100,8 @@ function afterLogin() {
   document.getElementById('student-id-input').value = '';
   document.getElementById('student-pw-input').value = '';
 
+  if (CU) DB.set('session', CU);
+
   if (CU) {
     var name = CU.isAdmin ? 'Admin' : CU.isGuest ? 'Guest' : (CU.name || CU.id);
     document.getElementById('home-greeting').textContent = 'Welcome, ' + name + '! 🎉';
@@ -117,6 +119,7 @@ function afterLogin() {
 
 function doLogout() {
   CU = null; showScreen('login-screen');
+  DB.set('session', null);
   document.getElementById('navbar').style.display = 'none';
 }
 
@@ -155,4 +158,20 @@ function showToast(msg, type) {
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('student-id-input').addEventListener('keydown', function(e) { if (e.key === 'Enter') doStudentLogin(); });
   document.getElementById('admin-pass-inp').addEventListener('keydown',   function(e) { if (e.key === 'Enter') confirmAdminLogin(); });
+
+  var saved = DB.get('session', null);
+  if (saved) {
+    CU = saved;
+    var name = CU.isAdmin ? 'Admin' : CU.isGuest ? 'Guest' : (CU.name || CU.id);
+    document.getElementById('home-greeting').textContent = 'Welcome, ' + name + '! 🎉';
+    updateNavbar();
+    if (CU.isAdmin) { goAdmin(); } else { goHome(); }
+    if (!CU.isAdmin && !CU.isGuest) {
+      var grade = CU.grade || 'M.1';
+      setTimeout(function() {
+        var el = document.querySelector('.grade-card[data-grade="' + grade + '"]');
+        if (el) el.click();
+      }, 400);
+    }
+  }
 });
