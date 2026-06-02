@@ -527,7 +527,12 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
   </div>
 </div>
 
-<!-- JS FILES — order matters: core → home → admin → games → bridge -->
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<!-- JS FILES — order matters: db → core → home → admin → games → bridge -->
+<script src="js/db.js"></script>
 <script src="js/core.js"></script>
 <script src="js/home.js"></script>
 <script src="js/admin.js"></script>

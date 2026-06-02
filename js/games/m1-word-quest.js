@@ -260,14 +260,14 @@ function _wqResult() {
 
   if (CU && !CU.isGuest && !CU.isAdmin) {
     var scores = getScores(), now = new Date();
-    scores.push({
+    var newScore = {
       studentId: CU.id, name: CU.name || CU.id, grade: CU.grade, room: CU.room || '',
       game: WQ.gameName, score: WQ.score, correct: WQ.correct, wrong: WQ.wrong,
       date: now.toLocaleDateString('en-GB'),
       time: now.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' }),
       ts: now.getTime()
-    });
-    saveScores(scores); showToast('Score saved!', 'success');
+    };
+    pushScoreAsync(newScore, function() { showToast('Score saved!', 'success'); });
   }
 
   // Build answer review
