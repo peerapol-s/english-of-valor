@@ -210,7 +210,7 @@ function renderStudentTable() {
       + '<td style="color:var(--text3);font-size:.8rem">' + (s.pw ? '••••' : 'None') + '</td>'
       + '<td style="text-align:right;white-space:nowrap"><div style="display:flex;justify-content:flex-end;gap:6px">'
       + '<button class="btn btn-sm" style="background:rgba(108,92,231,.15);color:#A29BFE;border:1px solid rgba(108,92,231,.3);font-size:.76rem" onclick="openEditStudent(\'' + htmlEsc(s.id) + '\')">✏️ Edit</button>'
-      + '<button class="btn btn-sm" style="background:rgba(225,112,85,.12);color:#FF8A72;border:1px solid rgba(225,112,85,.3);font-size:.76rem" onclick="deleteStudent(\'' + htmlEsc(s.id) + '\')">🗑️ Delete</button>'
+      + '<button class="btn btn-sm" style="background:rgba(225,112,85,.12);color:#FF8A72;border:1px solid rgba(225,112,85,.3);font-size:.76rem" onclick="deleteStudent(\'' + htmlEsc(s.id) + '\')">🗑️ Xelete</button>'
       + '</div></td></tr>';
   }).join('');
 }
