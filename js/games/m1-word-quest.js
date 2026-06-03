@@ -114,45 +114,49 @@ function _wqRender() {
   var choices = q.choices.slice().sort(function() { return Math.random() - 0.5; });
 
   document.getElementById('game-body').innerHTML =
+    // ── progress + counter (flex-shrink:0) ──
     '<div class="progress-bar"><div class="progress-fill" style="width:' + qProg + '%"></div></div>'
-    + '<div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--text3);margin-bottom:16px">'
-    + '<span>Question ' + (WQ.qIndex+1) + ' of ' + WQ.totalQ + '</span>'
-    + '<span>Monster #' + (WQ.monstersDefeated+1) + '</span></div>'
+    + '<div class="wq-counter">'
+    + '<span>Question ' + (WQ.qIndex+1) + ' / ' + WQ.totalQ + '</span>'
+    + '<span>Monster #' + (WQ.monstersDefeated+1) + ' &nbsp;Wave ' + WQ.wave + '</span>'
+    + '</div>'
+    // ── battle arena (flex-shrink:0) ──
     + '<div class="battle-arena">'
-    // PLAYER — LEFT
     + '<div class="player-side"><div class="player-box">'
-    + '<div class="player-name">Warrior ' + WQ.gradeId + '</div>'
-    + '<div class="player-avatar" id="pl-avatar">\uD83E\uDDD9\u200D\u2642\uFE0F</div>'
-    + '<div class="hp-row"><span style="font-size:.73rem;color:var(--text3)">HP</span>'
+    + '<div class="player-name">⚔️ Warrior ' + WQ.gradeId + '</div>'
+    + '<div class="player-avatar" id="pl-avatar">🧙‍♂️</div>'
+    + '<div class="hp-row"><span style="font-size:.65rem;color:var(--text3)">HP</span>'
     + '<div class="hp-bar"><div class="hp-fill ' + plClass + '" id="pl-hp" style="width:' + plPct + '%"></div></div>'
     + '<span class="hp-label" style="color:var(--success)">' + WQ.playerHp + '/' + WQ.maxPlayerHp + '</span></div>'
-    + (WQ.shieldActive ? '<div style="margin-top:8px;font-size:.78rem;color:var(--secondary)">\uD83D\uDEE1\uFE0F Shield Active!</div>' : '')
-    + (WQ.doubleActive ? '<div style="margin-top:4px;font-size:.78rem;color:var(--accent)">\u26A1 Double Damage!</div>' : '')
-    + '<div style="margin-top:10px;font-size:.76rem;color:var(--text3)">\uD83D\uDD25 Streak: ' + WQ.streak + ' | \u2705 ' + WQ.correct + ' \u274C ' + WQ.wrong + '</div>'
+    + (WQ.shieldActive ? '<div style="font-size:.7rem;color:var(--secondary)">🛡️ Shield!</div>' : '')
+    + (WQ.doubleActive ? '<div style="font-size:.7rem;color:var(--accent)">⚡ Double!</div>' : '')
+    + '<div style="font-size:.68rem;color:var(--text3);margin-top:4px">🔥 ' + WQ.streak + ' &nbsp;✅ ' + WQ.correct + ' &nbsp;❌ ' + WQ.wrong + '</div>'
     + '</div></div>'
-    // MONSTER — RIGHT
     + '<div class="monster-side"><div class="monster-box">'
     + '<div class="monster-name">' + WQ.monster.name + '</div>'
     + '<div class="monster-display" id="mon-emoji">' + WQ.monster.emoji + '</div>'
-    + '<div class="hp-row"><span style="font-size:.73rem;color:var(--text3)">HP</span>'
+    + '<div class="hp-row"><span style="font-size:.65rem;color:var(--text3)">HP</span>'
     + '<div class="hp-bar"><div class="hp-fill" id="mon-hp" style="width:' + mnPct + '%"></div></div>'
     + '<span class="hp-label" style="color:var(--danger)">' + WQ.monsterHp + '/' + WQ.monster.maxHp + '</span></div>'
-    + '<div style="font-size:.75rem;color:var(--text3);margin-top:6px">\u2694\uFE0F ATK ' + WQ.monster.atk + ' &nbsp;\uD83D\uDC8E ' + WQ.monster.reward + ' pts</div>'
+    + '<div style="font-size:.68rem;color:var(--text3);margin-top:4px">⚔️ ATK ' + WQ.monster.atk + ' &nbsp;💎 ' + WQ.monster.reward + ' pts</div>'
     + '</div></div>'
     + '</div>'
+    // ── powerups (flex-shrink:0) ──
     + '<div class="powerups">'
-    + '<button class="powerup-btn" id="wq-pu-hint"   ' + (WQ.powerups.hint   <= 0 ? 'disabled' : '') + '>\uD83D\uDCA1 Hint   <span class="powerup-count">' + WQ.powerups.hint   + '</span></button>'
-    + '<button class="powerup-btn" id="wq-pu-shield" ' + (WQ.powerups.shield <= 0 || WQ.shieldActive ? 'disabled' : '') + '>\uD83D\uDEE1\uFE0F Shield <span class="powerup-count">' + WQ.powerups.shield + '</span></button>'
-    + '<button class="powerup-btn" id="wq-pu-double" ' + (WQ.powerups.double <= 0 || WQ.doubleActive ? 'disabled' : '') + '>\u26A1 Double <span class="powerup-count">' + WQ.powerups.double + '</span></button>'
+    + '<button class="powerup-btn" id="wq-pu-hint"   ' + (WQ.powerups.hint   <= 0 ? 'disabled' : '') + '>💡 Hint <span class="powerup-count">' + WQ.powerups.hint   + '</span></button>'
+    + '<button class="powerup-btn" id="wq-pu-shield" ' + (WQ.powerups.shield <= 0 || WQ.shieldActive ? 'disabled' : '') + '>🛡️ Shield <span class="powerup-count">' + WQ.powerups.shield + '</span></button>'
+    + '<button class="powerup-btn" id="wq-pu-double" ' + (WQ.powerups.double <= 0 || WQ.doubleActive ? 'disabled' : '') + '>⚡ Double <span class="powerup-count">' + WQ.powerups.double + '</span></button>'
     + '</div>'
+    // ── question box (flex-shrink:0) ──
     + '<div class="question-box">'
-    + '<div style="text-align:center;font-size:.72rem;font-weight:800;letter-spacing:1px;margin-bottom:8px;color:'
+    + '<div style="text-align:center;font-size:.68rem;font-weight:800;letter-spacing:1px;margin-bottom:4px;color:'
     + (q.type === 'grammar' ? '#A29BFE' : '#00CEC9') + '">'
-    + (q.type === 'grammar' ? '\uD83D\uDCDD GRAMMAR' : '\uD83D\uDCDA VOCABULARY') + '</div>'
+    + (q.type === 'grammar' ? '📝 GRAMMAR' : '📚 VOCABULARY') + '</div>'
     + '<div class="question-word">' + htmlEsc(q.word) + '</div>'
     + '<div class="question-text">' + (q.type === 'vocab' ? 'What does this word mean?' : 'Fill in the blank:') + '</div>'
-    + '<div id="wq-hint" style="display:none;text-align:center;color:var(--text3);font-size:.8rem;margin-top:6px">\uD83D\uDCA1 ' + htmlEsc(q.hint) + '</div>'
+    + '<div id="wq-hint" style="display:none;text-align:center;color:var(--text3);font-size:.75rem;margin-top:4px">💡 ' + htmlEsc(q.hint) + '</div>'
     + '</div>'
+    // ── choices (flex:1 — fills remaining height) ──
     + '<div class="choices" id="wq-choices">'
     + choices.map(function(c) {
         return '<button class="choice-btn" data-choice="' + encodeURIComponent(c) + '" data-answer="' + encodeURIComponent(q.answer) + '">' + htmlEsc(c) + '</button>';
