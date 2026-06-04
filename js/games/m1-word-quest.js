@@ -74,6 +74,11 @@ var WQ_MONSTERS = [
 var WQ = {};
 
 function loadWordQuestGame(gradeId) {
+  // Reset scroll state from previous result page
+  var gb = document.getElementById('game-body');
+  var gs = document.getElementById('game-screen');
+  if (gb) { gb.classList.remove('result-mode'); gb.scrollTop = 0; }
+  if (gs) gs.classList.remove('result-mode');
   var shuffled = WQ_QUESTIONS.slice().sort(function() { return Math.random() - 0.5; });
   WQ = {
     gradeId: gradeId, gameName: 'Word Quest RPG',
@@ -254,6 +259,11 @@ function _wqAnim(who) {
 }
 
 function _wqResult() {
+  // Enable scroll for result page
+  var gb = document.getElementById('game-body');
+  var gs = document.getElementById('game-screen');
+  if (gb) gb.classList.add('result-mode');
+  if (gs) gs.classList.add('result-mode');
   var pct   = Math.round((WQ.correct / WQ.totalQ) * 100);
   var grade = pct >= 80 ? 'A' : pct >= 60 ? 'B' : pct >= 40 ? 'C' : 'D';
   var emoji = pct >= 80 ? '\uD83C\uDFC6' : pct >= 60 ? '\u2B50' : pct >= 40 ? '\uD83D\uDE0A' : '\uD83D\uDCAA';
