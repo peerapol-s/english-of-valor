@@ -25,7 +25,7 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
 @keyframes twinkle{0%,100%{opacity:.1;transform:scale(1)}50%{opacity:.8;transform:scale(1.3)}}
 .screen{display:none;min-height:100vh;position:relative;z-index:1}
 .screen.active{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
-#game-screen.active{align-items:stretch;justify-content:flex-start;padding:0;height:100vh;overflow:hidden}
+#game-screen.active{align-items:stretch;justify-content:flex-start;padding:0;width:100%;overflow:hidden}
 .logo{font-family:'Fredoka One',sans-serif;font-size:clamp(2rem,6vw,3.6rem);background:linear-gradient(135deg,#A29BFE,#6C5CE7,#00CEC9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
 .logo-sub{color:var(--text2);font-size:.9rem;text-align:center;margin-top:4px;font-weight:600}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;width:100%;max-width:440px;box-shadow:var(--shadow)}
@@ -104,7 +104,7 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
 .rank-3{background:linear-gradient(135deg,#CD7F32,#A0522D);color:#fff}
 .rank-other{background:var(--bg3);color:var(--text2)}
 /* ── Game Screen — no-scroll layout ── */
-#game-screen{padding:0;justify-content:flex-start;align-items:stretch;height:100vh;overflow:hidden}
+#game-screen{padding:0;justify-content:flex-start;align-items:stretch;width:100%;height:calc(100vh - 53px);overflow:hidden;margin-top:53px}
 .game-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
 .game-back{background:var(--bg3);color:var(--text2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.78rem;font-weight:700;cursor:pointer;transition:.2s;flex-shrink:0}
 .game-back:hover{background:var(--card2);color:var(--text)}
@@ -164,8 +164,8 @@ input,select,textarea{font-family:'Nunito',sans-serif;outline:none;border:none}
 .choice-btn.wrong{background:rgba(225,112,85,.15);border-color:var(--danger);color:#FF8A72;animation:shake .4s ease}
 .choice-btn:disabled{cursor:not-allowed}
 /* result phase — allow scroll */
-.game-body.result-mode{overflow:visible}
-#game-screen.result-mode{overflow-y:auto;overflow-x:hidden}
+.game-body.result-mode{overflow:visible;padding-bottom:40px}
+#game-screen.result-mode{overflow-y:auto;overflow-x:hidden;width:100%}
 #game-screen.result-mode .game-body{max-width:860px;width:100%;margin:0 auto}
 .result-box{text-align:center;padding:20px}
 .result-emoji{font-size:4.8rem;margin-bottom:16px;display:block;animation:bounceIn .6s ease}
